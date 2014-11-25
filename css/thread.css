@@ -1,0 +1,77 @@
+.post{
+    background-image: -webkit-gradient(linear, center top, center bottom, from(#f9f9f9), to(#fcfcfc), color-stop(10%, #f6f6f6), color-stop(88%, #f2f2f2), color-stop(97%, #f7f7f7));
+    background-image: -webkit-linear-gradient(top, #f9f9f9, #f6f6f6 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc);
+    background-image: -moz-linear-gradient(top, #f9f9f9, #f6f6f6 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc);
+    background-image: -o-linear-gradient(top, #f9f9f9, #f6f6f6 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc);
+    background-image: -ms-linear-gradient(top, #f9f9f9, #f6f6f6 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc);
+    /* background-image: linear-gradient(to bottom, #f9f9f9, #f6f6f6 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc); */
+    background: #ffffff;
+    -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+    /* box-shadow: 0 1px 5px rgba(0,0,0,0.75); */
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 17px;
+    color: #333;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 15px;
+    text-align:left;
+}
+
+.post-header{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    /* background-image: -webkit-gradient(linear, center top, center bottom, from(#c8c8c8), to(#fcfcfc), color-stop(10%, #ddd), color-stop(88%, #f2f2f2), color-stop(97%, #f7f7f7)); */
+    /* background-image: -webkit-linear-gradient(top, #c8c8c8, #ddd 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc); */
+    background-image: -moz-linear-gradient(top, #c8c8c8, #ddd 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc);
+    background-image: -o-linear-gradient(top, #c8c8c8, #ddd 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc);
+    background-image: -ms-linear-gradient(top, #c8c8c8, #ddd 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc);
+    /* background-image: linear-gradient(to bottom, #c8c8c8, #ddd 10%, #f2f2f2 88%, #f7f7f7 97%, #fcfcfc); */
+    background: #f9f9f9;
+    -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+    box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    line-height: 30px;
+    text-align:left;
+}
+
+.post-header-text{
+    max-width: 78%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.post-header > span{
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.time{
+    color: #a4a4a4;
+    font-size:12px;
+    float:right;
+    padding: 0 0 10px 0;
+}
+
+.conversationheader{
+    font: 22px/1.3 'Droid Sans',sans-serif;
+    font-weight: 700;
+    color: #515251;
+    background: #f9f9f9;
+    text-align: left;
+    margin-bottom: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-left: 25px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+}
+
+
