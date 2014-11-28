@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
     <head>
@@ -7,11 +7,7 @@
         <!--link href="css/styles.css" rel="stylesheet"/-->
         <!--link href="css/bootstrap.min.css" rel="stylesheet"-->
 
-        <?php if (isset($title)): ?>
-            <title>Incident Report Portal: <?= htmlspecialchars($title) ?></title>
-        <?php else: ?>
-            <title>Project</title>
-        <?php endif ?>
+        <title> Bovas Company Limited</title>
 
         <script src="js/jquery-1.8.2.js"></script>
         <script src="js/bootstrap.js"></script>
@@ -60,23 +56,12 @@
         </script>
 
         <style>
-            
-            /*div.container{ background-color: #efefef;}*/ 
-            .navbar-default .navbar-nav > li > a {
-                color: #900;
+            body{
+                background-color: #fdfdfd;
             }
-            element.style {
-            }
-            .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-                color: #fff;
-                background-color: #900;
-            </style>
+        </style>
 
-        </head>
+    </head>
 
-        <body>
-            <div class="container">
-
-
-
-
+    <body>
+        <div class="container">

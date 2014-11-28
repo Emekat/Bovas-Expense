@@ -81,7 +81,7 @@
 
                                 <ul class="nav navbar-nav navbar-right">
                                     <li class="pull-right"><a href="logout.php">Log Out</a></li>
-                                    <li class="pull-right"><a><?=$_SESSION["username"] ?></a></li>
+                                    <li class="pull-right"><a><?= $_SESSION["firstname"] ?></a></li>
                                 </ul>
                             </div><!-- /.navbar-collapse -->
                         </div><!-- /.container-fluid -->
