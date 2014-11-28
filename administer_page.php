@@ -1,5 +1,5 @@
 <script>
-            function showForm(){
+            function showForm(a){
                 if(window.XMLHttpRequest){
                     xmlhttp = new XMLHttpRequest();
                 }else{
@@ -9,12 +9,12 @@
                     if(xmlhttp.readyState==4 && xmlhttp.status==200){
                         console.log("Successful");
                         console.log(xmlhttp.responseText);
-                        console.log(document.getElementById('selectroute'));
-                        document.getElementById("selectroute").innerHTML = xmlhttp.responseText;
-                        document.getElementById("selectroute").setAttribute('style', 'visibility:visible');
+                        console.log(document.getElementById('poster'));
+                        document.getElementById("poster").innerHTML = xmlhttp.responseText;
+                        document.getElementById("poster").setAttribute('style', 'visibility:visible');
                     }
                 }
-                xmlhttp.open("GET", "lists.php?list=truck", true);
+                xmlhttp.open("GET", "lists.php?list="+a, true);
                 xmlhttp.send();
             }
 </script>
@@ -45,17 +45,20 @@
             <form role="form" action="incident.php" enctype="multipart/form-data" method="POST">
         <div class="row">
             <div class="col-lg-2 col-lg-offset-1">
-                <a href="javascript:showForm();" class="thumbnail">
+                <a href="javascript:showForm('truck');" class="thumbnail">
                     <img src="./img/truckroute.png">
                     <p class="text-center">Assign Route</p>
                 </a>
-                <a href="#" class="thumbnail">
+                <a href="javascript:showForm('complete')" class="thumbnail">
                     <img src="./img/routecomplete.png">
                   <p class="text-center">Mark trip as Complete</p>
                 </a>
             </div>
         </div>
-        <div class="row" style="visibility:hidden" id="selectroute">
+        <div class="row" style="visibility:hidden" id="poster">
+             <div class="col-lg-5 col-lg-offset-1">
+
+
         </div>
             </form>
             <br/>
