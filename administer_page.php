@@ -4,7 +4,7 @@
                     var e = document.getElementById("truck");
                     var value = e.options[e.selectedIndex].value;
                     document.getElementById('truckid').setAttribute('value', value);
-                    e = document.getElementById("truck");
+                    e = document.getElementById("route");
                     value = e.options[e.selectedIndex].value;
                     document.getElementById('routeid').setAttribute('value', value);
                 }
