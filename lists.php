@@ -8,6 +8,10 @@ if($_GET['list'] === "truck"){
 <h3>Select Truck and Route</h3>
                                 <div class="form-group">
                         <label for="truck">Truck</label>
+<!-- These hidden fields hold values to be used by the controller. Their values will be set by javascript -->
+                        <input type="hidden" value="route" name="what"/>
+                        <input type="hidden" value="routeid" name="routeid" id="routeid"/>
+                        <input type="hidden" value="truckid" name="truckid" id="truckid"/>
                         <select class="form-control" name="truck" id="truck">
                             <option value="">Select Truck</option>
 <?php
@@ -27,17 +31,22 @@ if($_GET['list'] === "truck"){
                         </select>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Assign</button>
+                        <button class="btn btn-primary" onclick="javascript:initFormValues('truck');" type="submit">Assign</button>
                     </div>
 <?php }
 elseif($_GET['list'] === "complete"){
     $rows = query("SELECT `tripid`, `date`, `platenumber`, `routename` FROM `truck`, `route`, `trip` WHERE".
-        " `truck`.`truckid` = `trip`.`truckid` AND `route`.`routeid` = `trip`.`routeid`");
+        " `truck`.`truckid` = `trip`.`truckid` AND `route`.`routeid` = `trip`.`routeid` IS NULL");
 ?>
  <div class="col-lg-5 col-lg-offset-1">
 <h3>Mark Trip as completed</h3>
                     <div class="form-group">
-                        <label for="trip">Trip</label>
+                        <input type="hidden" value="trip" name="what"/>
+                        <input type="hidden" value="routeid" name="routeid" id="routeid"/>
+                        <input type="hidden" value="tripid" name="tripid" id="tripid"/>
+                        <input type="hidden" value="truckid" name="truckid" id="truckid"/>
+                         <label for="trip">Trip</label>
+                        <input type="hidden" value="trip" name="what"/>
                         <select class="form-control" name="trip" id="trip">
                             <option value="">Select Trip</option>
 <?php
@@ -52,7 +61,7 @@ elseif($_GET['list'] === "complete"){
                         <input type="text" placeholder="Enter Waybill Number" class="form-control" name="waybillno" id="waybillno">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Assign</button>
+                        <button class="btn btn-primary" onclick="javascript:initFormValues('trip');" type="submit">Submit</button>
                     </div>
 
 

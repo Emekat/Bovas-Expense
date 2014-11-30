@@ -1,4 +1,14 @@
 <script>
+            function initFormValues(a){
+                if(a == 'truck'){
+                    var e = document.getElementById("truck");
+                    var value = e.options[e.selectedIndex].value;
+                    document.getElementById('truckid').setAttribute('value', value);
+                    e = document.getElementById("truck");
+                    value = e.options[e.selectedIndex].value;
+                    document.getElementById('routeid').setAttribute('value', value);
+                }
+            }
             function showForm(a){
                 if(window.XMLHttpRequest){
                     xmlhttp = new XMLHttpRequest();
@@ -42,7 +52,7 @@
                 </div>
                 <div class="col-lg-1"></div>
             </div>
-            <form role="form" action="incident.php" enctype="multipart/form-data" method="POST">
+            <form role="form" action="administer.php" enctype="multipart/form-data" method="POST">
         <div class="row">
             <div class="col-lg-2 col-lg-offset-1">
                 <a href="javascript:showForm('truck');" class="thumbnail">
