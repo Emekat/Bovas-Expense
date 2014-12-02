@@ -1,14 +1,4 @@
 <script>
-            function initFormValues(a){
-                if(a == 'truck'){
-                    var e = document.getElementById("truck");
-                    var value = e.options[e.selectedIndex].value;
-                    document.getElementById('truckid').setAttribute('value', value);
-                    e = document.getElementById("route");
-                    value = e.options[e.selectedIndex].value;
-                    document.getElementById('routeid').setAttribute('value', value);
-                }
-            }
             function showForm(a){
                 if(window.XMLHttpRequest){
                     xmlhttp = new XMLHttpRequest();
@@ -20,12 +10,29 @@
                         console.log("Successful");
                         console.log(xmlhttp.responseText);
                         console.log(document.getElementById('poster'));
+                        //Empty the messages
+                        document.getElementById("message").innerHTML = "";
                         document.getElementById("poster").innerHTML = xmlhttp.responseText;
                         document.getElementById("poster").setAttribute('style', 'visibility:visible');
                     }
                 }
                 xmlhttp.open("GET", "lists.php?list="+a, true);
                 xmlhttp.send();
+            }
+
+            function initFormValues(a){
+                if(a == 'truck'){
+                    var e = document.getElementById("truck");
+                    var value = e.options[e.selectedIndex].value;
+                    document.getElementById('truckid').setAttribute('value', value);
+                    e = document.getElementById("route");
+                    value = e.options[e.selectedIndex].value;
+                    document.getElementById('routeid').setAttribute('value', value);
+                }else{
+                    var e = document.getElementById("trip");
+                    var value = e.options[e.selectedIndex].value;
+                    document.getElementById('tripid').setAttribute('value', value);
+                }
             }
 </script>
             <div class="row">
@@ -67,8 +74,16 @@
         </div>
         <div class="row" style="visibility:hidden" id="poster">
              <div class="col-lg-5 col-lg-offset-1">
-
+            </div>
 
         </div>
+<div class="row">
+    <div class="col-lg-5 col-lg-offset-1">
+        <p id="message" <?php if($isDone === "yes") echo 'class="text-success"';else echo 'class="text-danger"';?>>
+            <?=$message?>
+        </p>
+    </div>
+
+</div>
             </form>
             <br/>

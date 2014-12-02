@@ -36,7 +36,7 @@ if($_GET['list'] === "truck"){
 <?php }
 elseif($_GET['list'] === "complete"){
     $rows = query("SELECT `tripid`, `date`, `platenumber`, `routename` FROM `truck`, `route`, `trip` WHERE".
-        " `truck`.`truckid` = `trip`.`truckid` AND `route`.`routeid` = `trip`.`routeid` IS NULL");
+        " `truck`.`truckid` = `trip`.`truckid` AND `route`.`routeid` = `trip`.`routeid` AND `trip`.`waybillno` IS NULL");
 ?>
  <div class="col-lg-5 col-lg-offset-1">
 <h3>Mark Trip as completed</h3>
