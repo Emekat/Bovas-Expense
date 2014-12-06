@@ -3,6 +3,6 @@
 // configuration
 require("config.php");
 
-render("report.php", ["title" => "A pimp named slickback"]);
+render("home_page.php", ["title" => "Bovas Expense Analysis"]);
 // render portfolio
 ?>

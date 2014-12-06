@@ -48,6 +48,10 @@
                                     <li class="active"><a href="administer.php">Administer</a></li>
                                     <li><a href="report.php">Reports</a></li>
                                 </ul>
+                                <ul class="nav navbar-nav dropdown-menu" role="menu">
+                                    <li class="dropdown" role="presentation"><a>Add Truck</a></li>
+                                    <li><a>Add Route</a></li>
+                                </ul>
 
                                 <ul class="nav navbar-nav navbar-right">
                                     <li class="pull-right"><a href="logout.php">Log Out</a></li>

@@ -63,6 +63,4 @@ elseif($_GET['list'] === "complete"){
                     <div class="form-group">
                         <button class="btn btn-primary" onclick="javascript:initFormValues('trip');" type="submit">Submit</button>
                     </div>
-
-
 <?php }?>
