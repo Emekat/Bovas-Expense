@@ -116,11 +116,12 @@ if ($_GET) {
 
 <?php
 if ($getReport) {
-    $fromMonth = $_GET['fromMonth'];
-    $fromYear = $_GET['fromYear'];
-    $toMonth = $_GET['toMonth'];
-    $toYear = $_GET['toYear'];
-
+//    $fromMonth = $_GET['fromMonth'];
+//    $fromYear = $_GET['fromYear'];
+//    $toMonth = $_GET['toMonth'];
+//    $toYear = $_GET['toYear'];
+    $month = $_GET['month'];
+    
     $months[1] = "January";
     $months[2] = "February";
     $months[3] = "March";
@@ -133,52 +134,67 @@ if ($getReport) {
     $months[10] = "October";
     $months[11] = "November";
     $months[12] = "December";
-    while (true) {
-        if ($fromMonth > 12) {
-            $fromMonth = $fromMonth % 12;
-            $fromYear = $fromYear + 1;
+//    while (true) {
+        $rows = query('SELECT DISTINCT `trip`.`truckid`, `platenumber` FROM `trip`, `truck` WHERE `trip`.`truckid` = `truck`.`truckid` AND MONTH(`date`) = ?', $month);
+        if (!$rows) {
+//            if ($fromMonth === $toMonth) {
+//                if ($fromYear === $toYear) {
+//                    break;
+//                }
+//            }
+            $month++;
         }
-        if ($fromYear > $toYear) {
+        if ($month > 12) {
+//            $month = $month % 12;
+//            $fromYear = $fromYear + 1;
+        }
+//        if ($fromYear > $toYear) {
             //We are done
-            break;
-        }
+//            break;
+//        }
+
         printf('        <div class="row">');
         printf('            <div class = "col-lg-10 col-lg-offset-1">');
         printf('                <table class = "table table-striped">');
         printf('                    <thead>');
-        printf("                        <tr><th>$months[$fromMonth]");
+        printf("                        <tr><th>$months[$month]");
         printf('                        </th></tr>');
         printf('                        <tr>');
-        printf('                            <th>Trip</th>');
+        printf('                            <th>Truck</th>');
         printf('                            <th>Expenses</th>');
         printf('                            <th>Income</th>');
         printf('                            <th>Profit/Loss</th>');
         printf('                        </tr>');
         printf('                     </thead>');
         printf('                    <tbody>');
-        $rows = query("SELECT distinct `tripid`, `date`, `platenumber`, `routename`, `expense`, `profitweight`, `capacity` FROM `truck`, `route`, `trip` WHERE `trip`.`date` AND YEAR(`date`) = ? AND MONTH(`date`) = ? AND `truck`.`truckid` = `trip`.`truckid` AND `route`.`routeid` = `trip`.`routeid`", $fromYear, $fromMonth);
         foreach ($rows as $row) {
             printf("            <tr>\n");
             //print a table
-            printf("                <td>%s %s %s %s</td>\n", $row['tripid'], $row['platenumber'], $row['routename'], $row['date']);
-
-            printf("                <td>" . $row['expense'] . "</td>\n");
-            printf("                <td>" . $income = $row['capacity'] * $row['profitweight'] . "</td>\n");
-            printf("                <td>" . ($income - $row['expense']) . "</td>\n");
+            $truckid = $row['truckid'];
+            printf("                <td>%s</td>\n", $row['platenumber']);
+            $expense = 0;
+            $res = query("SELECT SUM(`route`.`profitweight` * `truck`.`capacity`) AS sum FROM `truck`, `route`, `trip` WHERE `trip`.`truckid` = ? AND `truck`.`truckid` = ? AND MONTH(`trip`.`date`) = ? AND `route`.`routeid` = `trip`.`routeid`", $truckid, $truckid, $month);
+            $income = $res[0]['sum'];
+            $res = query("SELECT SUM(`expense`) AS sum FROM `trip` WHERE `trip`.`truckid` = ?", $truckid);
+            $expense = $res[0]['sum'];
+            $profitLoss = $income - $expense;
+            printf("                <td>" . $expense . "</td>\n");
+            printf("                <td>" . $income . "</td>\n");
+            printf("                <td>" . $profitLoss . "</td>\n");
             printf("            </tr>\n");
         }
         printf('            </tbody>');
         printf('            </table>');
         printf('            </div>');
         printf('        </div>');
-        if ($fromMonth === $toMonth) {
-            if ($fromYear === $toYear) {
-                break;
-            }
-        }
-        $fromMonth++;
+//        if ($fromMonth === $toMonth) {
+//            if ($fromYear === $toYear) {
+//                break;
+//            }
+//        }
+//        $fromMonth++;
     }
-}
+//}
 ?>
 <br/>
 <br/>
