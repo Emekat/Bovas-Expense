@@ -7,32 +7,6 @@ if ($_GET) {
     $getReport = false;
 }
 ?>
-<script>
-    function showReports() {
-        if (window.XMLHttpRequest) {
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                console.log("Successful");
-                console.log(xmlhttp.responseText);
-                console.log(document.getElementById('poster'));
-                //Empty the messages
-                document.getElementById("message").innerHTML = "";
-                document.getElementById("table").innerHTML = xmlhttp.responseText;
-                document.getElementById("table").setAttribute('style', 'visibility:visible');
-                var fromMonth = document.getElementById("fromMonth").value;
-                var fromYear = document.getElementById("fromYear").value;
-                var toMonth = docuement.getElementById("toMonth").value;
-                var toYear = document.getElementById("toYear").value;
-            }
-        }
-        xmlhttp.open("GET", "report_gen.php?fromMonth=" + fromMonth + "&fromYear=" + fromYear + "&toMonth" + toMonth + "&toYear" + toYear, true);
-        xmlhttp.send();
-    }
-</script>
 
 <div class="row">
     <div class="col-lg-1"></div>
@@ -44,7 +18,16 @@ if ($_GET) {
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Home</a></li>
-                        <li><a href="administer.php">Administer</a></li>
+                        <li role="presentation" class="dropdown">
+                             <a class="dropdown-toggle" data-toggle="dropdown" href="administer.php" role="button" aria-expanded="false">
+                                Administer <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="administer.php">Administer</a></li>
+                                <li><a href="add.php?opt=truck">Add Truck</a></li>
+                                <li><a href="add.php?opt=route">Add Route</a></li>
+                            </ul>
+                        </li>
                         <li class="active"><a href="report.php">Reports</a></li>
                     </ul>
 
@@ -58,70 +41,52 @@ if ($_GET) {
     </div>
     <div class="col-lg-1"></div>
 </div>
-<div class="row">
-    <div class="col-lg-1"></div>
-    <form action="report.php" method="GET">
+<form action="report.php" method="GET">
+    <div class="row">
+        <div class="col-lg-1"></div>
+
         <div class="col-lg-2">
-            <select class="form-control" name="fromMonth" id="fromMonth" onchange="" size="1">
-                <option value="01">January</option>
-                <option value="02">February</option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-            </select>
+
         </div>
         <div class="col-lg-2">
-            <select class="form-control" name = "fromYear" id="fromYear" size="1">
-                <option>2014</option>
-            </select>
+
         </div>
         <div class="col-lg-2">
-            <p class="text-center">To</p>
+            <p class="text-center">
+                <select class="form-control" name="month" id="month" onchange="" size="1">
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
         </div>
 
         <div class="col-lg-2">
-            <select class="form-control" name="toMonth" id="toMonth" onchange="" size="1">
-                <option value="01">January</option>
-                <option value="02">February</option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-            </select>
+
         </div>
         <div class="col-lg-2">
-            <select class="form-control" name = "toYear" id="toYear" size="1">
-                <option>2014</option>
-            </select>
+
         </div>
-    </form>
-</div>
-<div class="row">
-    <div class="col-lg-5"></div>
-    <div class="col-lg-2 text-center"><a href="report.php"><button class="btn btn-info">View Report</button></a></div>
-</div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-5"></div>
+        <div class="col-lg-2 text-center"><a href="report.php"><button class="btn btn-info">View Report</button></a></div>
+    </div>
+</form>
 
 <?php
 if ($getReport) {
-//    $fromMonth = $_GET['fromMonth'];
-//    $fromYear = $_GET['fromYear'];
-//    $toMonth = $_GET['toMonth'];
-//    $toYear = $_GET['toYear'];
     $month = $_GET['month'];
-    
+
     $months[1] = "January";
     $months[2] = "February";
     $months[3] = "March";
@@ -134,25 +99,9 @@ if ($getReport) {
     $months[10] = "October";
     $months[11] = "November";
     $months[12] = "December";
-//    while (true) {
-        $rows = query('SELECT DISTINCT `trip`.`truckid`, `platenumber` FROM `trip`, `truck` WHERE `trip`.`truckid` = `truck`.`truckid` AND MONTH(`date`) = ?', $month);
-        if (!$rows) {
-//            if ($fromMonth === $toMonth) {
-//                if ($fromYear === $toYear) {
-//                    break;
-//                }
-//            }
-            $month++;
-        }
-        if ($month > 12) {
-//            $month = $month % 12;
-//            $fromYear = $fromYear + 1;
-        }
-//        if ($fromYear > $toYear) {
-            //We are done
-//            break;
-//        }
 
+    $rows = query('SELECT DISTINCT `trip`.`truckid`, `platenumber` FROM `trip`, `truck` WHERE `trip`.`truckid` = `truck`.`truckid` AND MONTH(`date`) = ?', $month);
+    if ($rows) {
         printf('        <div class="row">');
         printf('            <div class = "col-lg-10 col-lg-offset-1">');
         printf('                <table class = "table table-striped">');
@@ -169,7 +118,6 @@ if ($getReport) {
         printf('                    <tbody>');
         foreach ($rows as $row) {
             printf("            <tr>\n");
-            //print a table
             $truckid = $row['truckid'];
             printf("                <td>%s</td>\n", $row['platenumber']);
             $expense = 0;
@@ -187,14 +135,14 @@ if ($getReport) {
         printf('            </table>');
         printf('            </div>');
         printf('        </div>');
-//        if ($fromMonth === $toMonth) {
-//            if ($fromYear === $toYear) {
-//                break;
-//            }
-//        }
-//        $fromMonth++;
+    } else {
+        printf('        <div class="row">');
+        printf('            <div class = "col-lg-10 col-lg-offset-1">');
+        printf('                <p class="text-info">No trips found for this month</p>');
+        printf('            </div>');
+        printf('        </div>');
     }
-//}
+}
 ?>
 <br/>
 <br/>
