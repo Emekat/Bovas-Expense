@@ -66,41 +66,17 @@ if ($_GET) {
     </div>
     <div class="col-lg-1"></div>
 </div>
-<form action="report.php" method="GET">
+<form action="report_todate.php" method="GET">
     <div class="row">
-        <div class="col-lg-1"></div>
-
-        <div class="col-lg-2">
-
+        <div class="col-lg-2 col-lg-offset-5">
+            <select class="form-control" name="year">
+                <option>2013</option>
+                <option>2014</option>
+                <option>2015</option>
+                <option>2016</option>
+            </select>
+            <br/>
         </div>
-        <div class="col-lg-2">
-
-        </div>
-        <div class="col-lg-2">
-            <p class="text-center">
-                <select class="form-control" name="month" id="month" onchange="" size="1">
-                    <option value="01">January</option>
-                    <option value="02">February</option>
-                    <option value="03">March</option>
-                    <option value="04">April</option>
-                    <option value="05">May</option>
-                    <option value="06">June</option>
-                    <option value="07">July</option>
-                    <option value="08">August</option>
-                    <option value="09">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                </select>
-        </div>
-
-        <div class="col-lg-2">
-
-        </div>
-        <div class="col-lg-2">
-
-        </div>
-
     </div>
     <div class="row">
         <div class="col-lg-5"></div>
@@ -110,8 +86,10 @@ if ($_GET) {
 
 <?php
 if ($getReport) {
-    $month = $_GET['month'];
-
+    $year = $_GET['year'];
+    $startMonth = 1;
+    $endMonth = date("m");
+    $endYear = date("Y");
     $months[1] = "January";
     $months[2] = "February";
     $months[3] = "March";
@@ -124,48 +102,63 @@ if ($getReport) {
     $months[10] = "October";
     $months[11] = "November";
     $months[12] = "December";
-
-    $rows = query('SELECT DISTINCT `trip`.`truckid`, `platenumber` FROM `trip`, `truck` WHERE `trip`.`truckid` = `truck`.`truckid` AND MONTH(`date`) = ?', $month);
-    if ($rows) {
-        printf('        <div class="row">');
-        printf('            <div class = "col-lg-10 col-lg-offset-1">');
-        printf('                <table class = "table table-striped">');
-        printf('                    <thead>');
-        printf("                        <tr><th>$months[$month]");
-        printf('                        </th></tr>');
-        printf('                        <tr>');
-        printf('                            <th>Truck</th>');
-        printf('                            <th>Expenses</th>');
-        printf('                            <th>Income</th>');
-        printf('                            <th>Profit/Loss</th>');
-        printf('                        </tr>');
-        printf('                     </thead>');
-        printf('                    <tbody>');
-        foreach ($rows as $row) {
-            printf("            <tr>\n");
-            $truckid = $row['truckid'];
-            printf("                <td>%s</td>\n", $row['platenumber']);
-            $expense = 0;
-            $res = query("SELECT SUM(`route`.`profitweight` * `truck`.`capacity`) AS sum FROM `truck`, `route`, `trip` WHERE `trip`.`truckid` = ? AND `truck`.`truckid` = ? AND MONTH(`trip`.`date`) = ? AND `route`.`routeid` = `trip`.`routeid`", $truckid, $truckid, $month);
-            $income = $res[0]['sum'];
-            $res = query("SELECT SUM(`expense`) AS sum FROM `trip` WHERE `trip`.`truckid` = ?", $truckid);
-            $expense = $res[0]['sum'];
-            $profitLoss = $income - $expense;
-            printf("                <td>" . $expense . "</td>\n");
-            printf("                <td>" . $income . "</td>\n");
-            printf("                <td>" . $profitLoss . "</td>\n");
-            printf("            </tr>\n");
+    while (true) {
+        if ($startMonth > 12) {
+            $startMonth = $startMonth % 12;
+            $year = $year + 1;
         }
-        printf('            </tbody>');
-        printf('            </table>');
-        printf('            </div>');
-        printf('        </div>');
-    } else {
-        printf('        <div class="row">');
-        printf('            <div class = "col-lg-10 col-lg-offset-1">');
-        printf('                <p class="text-info">No trips found for this month</p>');
-        printf('            </div>');
-        printf('        </div>');
+        if ($year > $endYear) {
+            //We are done
+            break;
+        }
+        $rows = query('SELECT DISTINCT `trip`.`truckid`, `platenumber` FROM `trip`, `truck` WHERE `trip`.`truckid` = `truck`.`truckid` AND MONTH(`date`) = ? AND YEAR(`date`) = ?', $startMonth, $year);
+        if ($rows) {
+            printf('        <div class="row">');
+            printf('            <div class = "col-lg-10 col-lg-offset-1">');
+            printf('                <table class = "table table-striped">');
+            printf('                    <thead>');
+            printf("                        <tr><th>$months[$startMonth]");
+            printf('                        </th></tr>');
+            printf('                        <tr>');
+            printf('                            <th>Truck</th>');
+            printf('                            <th>Expenses</th>');
+            printf('                            <th>Income</th>');
+            printf('                            <th>Profit/Loss</th>');
+            printf('                        </tr>');
+            printf('                     </thead>');
+            printf('                    <tbody>');
+            foreach ($rows as $row) {
+                printf("            <tr>\n");
+                $truckid = $row['truckid'];
+                printf("                <td>%s</td>\n", $row['platenumber']);
+                $expense = 0;
+                $res = query("SELECT SUM(`route`.`profitweight` * `truck`.`capacity`) AS sum FROM `truck`, `route`, `trip` WHERE `trip`.`truckid` = ? AND `truck`.`truckid` = ? AND MONTH(`trip`.`date`) = ? AND YEAR(`trip`.`date`) = ? AND `route`.`routeid` = `trip`.`routeid`", $truckid, $truckid, $startMonth, $year);
+                $income = $res[0]['sum'];
+                $res = query("SELECT SUM(`expense`) AS sum FROM `trip` WHERE `trip`.`truckid` = ?", $truckid);
+                $expense = $res[0]['sum'];
+                $profitLoss = $income - $expense;
+                printf("                <td>" . $expense . "</td>\n");
+                printf("                <td>" . $income . "</td>\n");
+                printf("                <td>" . $profitLoss . "</td>\n");
+                printf("            </tr>\n");
+            }
+            printf('            </tbody>');
+            printf('            </table>');
+            printf('            </div>');
+            printf('        </div>');
+        } else {
+//            printf('        <div class="row">');
+//            printf('            <div class = "col-lg-10 col-lg-offset-1">');
+//            printf('                <p class="text-info">No trips found for this month</p>');
+//            printf('            </div>');
+//            printf('        </div>');
+        }
+        if ($startMonth === $endMonth) {
+            if ($year === $endYear) {
+                break;
+            }
+        }
+        $startMonth++;
     }
 }
 ?>

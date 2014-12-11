@@ -1,4 +1,8 @@
 <script>
+    $(function () {
+        console.log("Ready document forms capacity");
+    });
+
     function validateForm() {
         var capacity = document.forms[0].capacity.value;
         var truckname = document.forms[0].truckname.value;
@@ -77,37 +81,25 @@
     <div class="col-lg-2 col-lg-offset-1">
         <a href="javascript:showForm('truck');" class="thumbnail">
             <img src="./img/addtruck.png">
-            <p class="text-center">Add Truck</p>
+            <p class="text-center">Edit Truck</p>
         </a>
     </div>
 </div>
 <form role="form" action="add.php" onsubmit="return validateForm();" method="POST">
     <div class="row">
-
         <div class="col-lg-2 col-lg-offset-1">
             <div class="form-group">
                 <input type="hidden" value="truck" name="type"/>
                 <label for="platenumber">Plate Number</label>
-                <input class="form-control" type="text" name="platenumber" maxlength="20"/>
+                <select class="form-control" name="platenumber">
+                    <option value="doo">AKD-744-AT</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="driver">Driver</label>
                 <input class="form-control" type="text" name="driver" maxlength="40" />
             </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-lg-2 col-lg-offset-1">
-            <div class="form-group">
-                <label for="age">Age</label>
-                <input class="form-control" type="number" name="age" maxlength="3" />
-            </div>
-            <div class="form-group">
-                <label for="capacity">Capacity</label>
-                <input class="form-control" type="number" name="capacity" maxlength="20" />
-            </div>
-            <button class="btn btn-normal" type="submit">Add Truck</button>
+            <button class="btn btn-normal" type="submit">Submit</button>
         </div>
     </div>
     <div class="row">

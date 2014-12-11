@@ -41,21 +41,45 @@
         <img src="img/logo.png"/><h1></h1>
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/bovasexpense">Bovas</a>
+                </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Home</a></li>
-                        <li role="presentation" class="dropdown active">
+                        <li role="presentation" class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="administer.php" role="button" aria-expanded="false">
                                 Administer <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="administer.php">Administer</a></li>
-                                <li><a href="add.php?opt=truck">Add Truck</a></li>
-                                <li><a href="add.php?opt=route">Add Route</a></li>
+                                <li class="divider"></li>
+                                <li role="presentation" class="dropdown-header">Add</li>
+                                <li><a href="add.php?opt=truck">Truck</a></li>
+                                <li><a href="add.php?opt=route">Route</a></li>
+                                <li class="divider"></li>
+                                <li role="presentation" class="dropdown-header">Edit</li>
+                                <li><a href="edit.php?opt=truck">Truck</a></li>
+                                <li><a href="edit.php?opt=route">Route</a></li>
                             </ul>
                         </li>
-                        <li><a href="report.php">Reports</a></li>
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="report.php" role="button" aria-expanded="false">
+                                Reports <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="report.php">Monthly Report</a></li>
+                                <li class="divider"></li>
+                                <li><a href="report_todate.php">Year till Current Report</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav dropdown-menu" role="menu">
                         <li class="dropdown" role="presentation"><a>Add Truck</a></li>
@@ -92,12 +116,13 @@
     </div>
     <div class="row">
         <div class="col-lg-5 col-lg-offset-1">
-            <p id="message" <?php if ($isDone === "yes")
-    echo 'class="text-success"';
-else
-    echo 'class="text-danger"';
-?>>
-<?= $message ?>
+            <p id="message" <?php
+               if ($isDone === "yes")
+                   echo 'class="text-success"';
+               else
+                   echo 'class="text-danger"';
+               ?>>
+                   <?= $message ?>
             </p>
         </div>
 

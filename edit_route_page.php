@@ -1,21 +1,21 @@
 <script>
     function validateForm() {
-        var capacity = document.forms[0].capacity.value;
-        var truckname = document.forms[0].truckname.value;
-        console.log(capacity);
-        if (weight > 200000) {
-            document.getElementById("message").innerHTML = "Capacity can not be more than 100000";
+        var weight = document.forms[0].weight.value;
+        var routename = document.forms[0].routename.value;
+        console.log(weight);
+        if (weight > 100000) {
+            document.getElementById("message").innerHTML = "Weight can not be more than 100000";
             document.getElementById("message").focus();
             return false;
         }
-        document.forms[0].truckname.value = truckname.toUpperCase();
+        document.forms[0].routename.value = routename.toUpperCase();
         return true;
     }
 
 
 
 
-</script>           
+</script>
 <div class="row">
     <div class="col-lg-1"></div>
     <div class="col-lg-10">
@@ -61,6 +61,7 @@
                                 <li><a href="report_todate.php">Year till Current Report</a></li>
                             </ul>
                         </li>
+
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -75,49 +76,36 @@
 </div>
 <div class="row">
     <div class="col-lg-2 col-lg-offset-1">
-        <a href="javascript:showForm('truck');" class="thumbnail">
+        <div class="thumbnail">
             <img src="./img/addtruck.png">
-            <p class="text-center">Add Truck</p>
-        </a>
+            <p class="text-center">Add Route</p>
+        </div>
     </div>
 </div>
-<form role="form" action="add.php" onsubmit="return validateForm();" method="POST">
-    <div class="row">
-
+<div class="row">
+    <form role="form" action="edit.php" onsubmit="return validateForm();" method="POST">
         <div class="col-lg-2 col-lg-offset-1">
             <div class="form-group">
-                <input type="hidden" value="truck" name="type"/>
-                <label for="platenumber">Plate Number</label>
-                <input class="form-control" type="text" name="platenumber" maxlength="20"/>
+                <input type="hidden" value="route" name="type"/>
+                <label for="routename">Route Name/Code</label>
+                <select class="form-control" name="routename">
+                    <option value="doo">IBD-AJK-IBD-DEG</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="driver">Driver</label>
-                <input class="form-control" type="text" name="driver" maxlength="40" />
+                <label for="weight">Weight</label>
+                <input class="form-control" type="number" name="weight" required maxlength="20" />
             </div>
+            <button class="btn btn-normal"  type="submit">Submit</button>
         </div>
-
+    </form>
+</div>
+<div class="row">
+    <div class ="col-lg-2 col-lg-offset-1">
+        <br/>
+        <p id="message" class="<?= $messageclass ?>"><?= $message ?></p>
     </div>
-    <div class="row">
-        <div class="col-lg-2 col-lg-offset-1">
-            <div class="form-group">
-                <label for="age">Age</label>
-                <input class="form-control" type="number" name="age" maxlength="3" />
-            </div>
-            <div class="form-group">
-                <label for="capacity">Capacity</label>
-                <input class="form-control" type="number" name="capacity" maxlength="20" />
-            </div>
-            <button class="btn btn-normal" type="submit">Add Truck</button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2 col-lg-offset-1">
-            <br/>
-            <p id="message" class="<?= $messageclass ?>"><?= $message ?></p>
-        </div>
-    </div>
-</form>
-
+</div>
 
 <br/>
 <br/>
